@@ -1,0 +1,34 @@
+<!--
+@license
+Copyright (c) 2015 Charbel Rami. All rights reserved.
+MIT
+-->
+<dom-module id="grid-row">
+  <template>
+    <style>
+      :host {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        width: 100%;
+      }
+    </style>
+    <content></content>
+  </template>
+  <script>
+    Polymer({
+      is: 'grid-row',
+      properties: {},
+      ready: function() {
+        Polymer.dom(this).firstElementChild.classList.add('first');
+        Polymer.dom(this).lastElementChild.classList.add('last');
+      }
+    });
+  </script>
+</dom-module>

@@ -5,6 +5,7 @@ MIT
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="grid-row.html">
 <link rel="import" href="grid-col.html">
 <dom-module id="grid-element">
   <template>
@@ -16,11 +17,11 @@ MIT
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
-        -webkit-box-orient: vertical;
+        -webkit-box-orient: horizontal;
         -webkit-box-direction: normal;
-        -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-        flex-direction: column;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
       }
       :host([gho]) {
         padding-left: var(--grid-gutter-ho, --grid-gutter);
@@ -30,15 +31,21 @@ MIT
         padding-top: var(--grid-gutter-vo, --grid-gutter);
         padding-bottom: var(--grid-gutter-vo, --grid-gutter);
       }
+      :host([gvi]) > ::content grid-row {
+        padding-bottom: var(--grid-gutter-vi, --grid-gutter);
+      }
+      :host([gvi]) > ::content .last {
+        padding-bottom: 0;
+      }
       :host([match]) {
         -webkit-box-orient: horizontal;
         -webkit-box-direction: normal;
         -webkit-flex-direction: row;
         -ms-flex-direction: row;
         flex-direction: row;
-        -webkit-flex-wrap: nowrap;
-        -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
       }
       :host([center][match]) {
         -webkit-box-align: center;
@@ -61,17 +68,17 @@ MIT
         -ms-grid-row-align: flex-end;
             align-items: flex-end;
       }
-      :host([ghi][match]) > ::content > grid-col {
+      :host([ghi][match]) > ::content grid-col {
         margin-left: var(--grid-gutter-hi, --grid-gutter);
       }
-      :host([ghi][match]) > ::content > .first {
-        margin-left: 0 !important;
+      :host([ghi][match]) > ::content .first {
+        margin-left: 0;
       }
-      :host([gvi]:not([match])) > ::content > grid-col {
+      :host([gvi]:not([match])) > ::content grid-col {
         margin-top: var(--grid-gutter-vi, --grid-gutter);
       }
-      :host([gvi]:not([match])) > ::content > .first {
-        margin-top: 0 !important;
+      :host([gvi]:not([match])) > ::content .first {
+        margin-top: 0;
       }
     </style>
     <iron-media-query query="{{mq}}" query-matches="{{match}}"></iron-media-query>
@@ -122,6 +129,7 @@ MIT
         this.customStyle['--grid-gutter-vi'] = this.gvi;
         this.updateStyles();
         Polymer.dom(this).firstElementChild.classList.add('first');
+        Polymer.dom(this).lastElementChild.classList.add('last');
       },
       attached: function() {
         this._isMatch();
